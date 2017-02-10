@@ -1,0 +1,29 @@
+Description:
+
+    This Program loads a user's transactions from the GetAllTransactions endpoint
+    and determine how much money the user spends and makes in each of the months.
+
+    Output format like:
+    ------------------------------
+    {
+     "2014-10": {"spent": "$200.00", "income": "$500.00"},
+     "2014-11": {"spent": "$1510.05", "income": "$1000.00"},
+     ...
+     "2015-04": {"spent": "$300.00", "income": "$500.00"},
+     "average": {"spent": "$750.00", "income": "$950.00"}
+    }
+    ------------------------------
+
+
+System Requirement:
+   - OS: Microsoft Windows (tested on Windows 10)
+   - install jdk or jre with version 1.8.0_91 or above (tested on java
+     version 1.8.0_91) and add JAVA_HOME/bin/java to the system PATH variable.
+
+
+Download and Run the Program:
+  - go to "https://github.com/garyglu/capitalone_interview" page, click "Clone or download" button, select "Download ZIP"
+  - unzip downloaded zip file to the directory you prefer, let it call it YOUR_DIR
+  - run cmd to open terminal window, cd to YOUR_DIR/capitalone_interview-master/bin
+     -- "run.cmd" to run teh program
+     -- "run.cmd test" to run the unit tests

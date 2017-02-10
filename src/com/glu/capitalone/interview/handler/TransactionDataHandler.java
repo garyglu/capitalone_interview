@@ -4,38 +4,27 @@ import com.glu.capitalone.interview.*;
 import com.glu.capitalone.interview.data.*;
 import com.glu.capitalone.interview.filter.*;
 import com.glu.capitalone.interview.interfaces.*;
-import com.glu.capitalone.interview.utils.*;
-import output.*;
+import com.glu.capitalone.interview.output.*;
 
 import java.util.*;
 
 public class TransactionDataHandler {
-    private List<ApiDataFetcher> dataFetcherList = new ArrayList<>();
-    private List<TransactionFilter> filterList = new ArrayList<>();
-    private List<OutputResult> outputList = new ArrayList<>();
-    private final boolean testMode;
 
-    public TransactionDataHandler() {
-        this(false);
-    }
+    public String handle(boolean includingTestOnlyData, boolean ignoreDonuts,
+        boolean crystalBall, boolean ignoreCCPayment) throws Exception{
+        List<ApiDataFetcher> dataFetcherList = new ArrayList<>();
+        List<TransactionFilter> filterList = new ArrayList<>();
+        List<OutputResult> outputList = new ArrayList<>();
 
-    public TransactionDataHandler(boolean test) {
-        testMode = test;
-        dataFetcherList.add(ApiServiceEnum.getAllTransactions.getParser());
+        //set default setting
+        dataFetcherList.add(getDefaultAllTransactionParser());
         outputList.add(new TransactionOutput());
-    }
 
-
-    public boolean handle() {
-        return handle(true, false, false, false);
-    }
-
-    public boolean handle(boolean includingTestOnlyData, boolean ignoreDonuts, boolean crystalBall, boolean ignoreCCPayment) {
         if (ignoreDonuts) {
             filterList.add(new IgnoreDonutsTransactionFilter());
         }
         if (crystalBall) {
-            dataFetcherList.add(ApiServiceEnum.getProjectedTransactionsForMonth.getParser());
+            dataFetcherList.add(getDefaultProjectedTransactionParser());
         }
         if (ignoreCCPayment) {
             filterList.add(new IgnoreCCTransactionTransactionFilter());
@@ -47,21 +36,23 @@ public class TransactionDataHandler {
             allTransactions.addAll(f.getTransactionData(includingTestOnlyData));
         }
 
-        if (testMode && allTransactions.isEmpty()) {
-            return false;
-
-        }
-
         for (TransactionFilter f : filterList) {
             allTransactions = new HashSet<>(f.filter(allTransactions));
         }
 
-
-        //output result
+        StringBuilder sb = new StringBuilder();
         for (OutputResult o : outputList) {
-            OutputUtils.println(o.output(allTransactions, crystalBall, ignoreCCPayment));
+            sb.append(o.output(allTransactions, crystalBall, ignoreCCPayment));
         }
-        return true;
+
+        return sb.toString();
     }
 
+    protected ApiDataParser getDefaultAllTransactionParser() {
+        return ApiServiceEnum.getAllTransactions.getParser();
+    }
+
+    protected ApiDataParser getDefaultProjectedTransactionParser() {
+        return ApiServiceEnum.getProjectedTransactionsForMonth.getParser();
+    }
 }

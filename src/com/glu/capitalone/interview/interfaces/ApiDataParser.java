@@ -1,7 +1,6 @@
 package com.glu.capitalone.interview.interfaces;
 
 import com.glu.capitalone.interview.data.*;
-import com.glu.capitalone.interview.utils.*;
 import org.apache.http.*;
 import org.apache.http.client.*;
 import org.apache.http.client.methods.*;
@@ -25,14 +24,9 @@ public abstract class ApiDataParser implements ApiDataFetcher {
     }
 
     @Override
-    public List<Transaction> getTransactionData(boolean includingTestOnlyData) {
-        try {
-            String rawJasonData = getApiData();
-            return parseJasonString(rawJasonData, includingTestOnlyData);
-        } catch (Exception ex) {
-            OutputUtils.println("Failed to get Transactions data from API");
-            return Collections.emptyList();
-        }
+    public List<Transaction> getTransactionData(boolean includingTestOnlyData) throws Exception {
+        String rawJasonData = getApiData();
+        return parseJasonString(rawJasonData, includingTestOnlyData);
     }
 
     public String getApiData() throws Exception {

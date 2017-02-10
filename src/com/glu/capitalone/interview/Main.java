@@ -24,6 +24,7 @@ public class Main {
                 ignoreDonuts = readLine("-ignore donuts Transactions?(y/n):");
             }
 
+
             String runProjectedTransaction = readLine("-include projected transactions(crystal-ball)?(y/n):");
             while (!validInput(runProjectedTransaction)) {
                 OutputUtils.println("Your input is invalid, please try again!!!!");
@@ -37,12 +38,22 @@ public class Main {
             }
 
             OutputUtils.println("\n\n---------------------- Start Result---------------------");
-            new TransactionDataHandler().handle(
-                "Y".equals(includingTestData.trim().toUpperCase()), "Y".equals(ignoreDonuts.trim().toUpperCase()),
-                "Y".equals(runProjectedTransaction.trim().toUpperCase()), "Y".equals(ignoreCcPayment.trim().toUpperCase()));
 
-            OutputUtils.println(
-                "---------------------- End Result---------------------\n\n");
+            boolean includeTestOnlyData = includingTestData == null || includingTestData.trim().length() == 0 ||"Y".equalsIgnoreCase(includingTestData.trim());
+            boolean ignoreDonutsTransaction = ignoreDonuts == null || ignoreDonuts.trim().length() == 0 || "Y".equalsIgnoreCase(ignoreDonuts.trim());
+            boolean includeProjectedTransaction = runProjectedTransaction == null || runProjectedTransaction.trim().length() == 0 || "Y".equalsIgnoreCase(runProjectedTransaction.trim());
+            boolean ignoreCcPaymentTransaction = ignoreCcPayment == null || ignoreCcPayment.trim().length() == 0 || "Y".equalsIgnoreCase(ignoreCcPayment.trim());
+            try {
+                OutputUtils.println(
+                    new TransactionDataHandler().handle(
+                        includeTestOnlyData, ignoreDonutsTransaction,
+                        includeProjectedTransaction, ignoreCcPaymentTransaction));
+            } catch (Exception e) {
+                OutputUtils.println("Failed to getApiData and print the result");
+                e.printStackTrace();
+            }
+
+            OutputUtils.println("---------------------- End Result---------------------\n\n");
 
 
             String tryAgain = readLine("try again?(y/n):");
@@ -50,7 +61,7 @@ public class Main {
                 OutputUtils.println("Your input is invalid, please try again!!!!");
                 tryAgain = readLine("ignore Credit Card Payment Transactions?(y/n):");
             }
-            if ("N".equalsIgnoreCase(tryAgain.trim())) {
+            if (tryAgain!= null && "N".equalsIgnoreCase(tryAgain.trim())) {
                 OutputUtils.println("goodbye!");
                 break;
             }
@@ -69,6 +80,10 @@ public class Main {
         OutputUtils.println(" \"2015-04\": {\"spent\": \"$300.00\", \"income\": \"$500.00\"},");
         OutputUtils.println(" \"average\": {\"spent\": \"$750.00\", \"income\": \"$950.00\"}");
         OutputUtils.println("}");
+        OutputUtils.println("");
+        OutputUtils.println("");
+        OutputUtils.println("The program starts with few questions, please input 'y' or 'n'(case insensitive),");
+        OutputUtils.println("then press enter key. 'y' is default value.");
         OutputUtils.println("You can click 'ctrl-c' to exit program any time");
         OutputUtils.println("================================================================================\n");
     }
@@ -79,8 +94,10 @@ public class Main {
      * @return 0 if selection is invalid, otherwise selection number
      */
     public static boolean validInput(String input) {
-        return (input != null  &&
-            ("Y".equalsIgnoreCase(input.trim()) || "N".equalsIgnoreCase(input.trim())));
+        return (input == null  ||
+            ("".equals(input.trim()) ||
+             "Y".equalsIgnoreCase(input.trim()) ||
+             "N".equalsIgnoreCase(input.trim())));
     }
 
     public static String readLine(String str) {
@@ -89,7 +106,7 @@ public class Main {
             BufferedReader buffer = new BufferedReader(new InputStreamReader(System.in));
             return buffer.readLine();
         } catch (IOException ex) {
-            return "";
+            return null;
         }
     }
 }

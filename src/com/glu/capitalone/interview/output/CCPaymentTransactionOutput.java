@@ -1,4 +1,4 @@
-package output;
+package com.glu.capitalone.interview.output;
 
 import com.glu.capitalone.interview.data.*;
 import com.glu.capitalone.interview.interfaces.*;

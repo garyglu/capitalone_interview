@@ -1,4 +1,4 @@
-package output;
+package com.glu.capitalone.interview.output;
 
 import com.glu.capitalone.interview.data.*;
 import com.glu.capitalone.interview.interfaces.*;
@@ -19,7 +19,7 @@ public class TransactionOutput implements OutputResult {
             Collection<MonthSummary> results = normalizeResult(transactions, crystalBall, ignoreCCPayment);
             return outputResult(results);
         } catch (Exception ex) {
-            return "Failed to output transaction result";
+            return "Failed to com.glu.capitalone.interview.output transaction result";
         }
     }
 
