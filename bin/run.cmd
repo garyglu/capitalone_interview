@@ -9,7 +9,9 @@ IF NOT DEFINED JAVA_HOME (
     exit /b
 )
 
-set CLASSPATH=".;..\lib\*"
+cd %BRANCH_HOME%
+
+set CLASSPATH=".;lib\*"
 set MAIN_CLASS="com.glu.capitalone.interview.Main"
 
 java -cp %CLASSPATH% %MAIN_CLASS%
