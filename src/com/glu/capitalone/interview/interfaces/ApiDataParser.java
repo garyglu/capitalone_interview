@@ -24,9 +24,9 @@ public abstract class ApiDataParser implements ApiDataFetcher {
     }
 
     @Override
-    public List<Transaction> getTransactionData(boolean includingTestOnlyData) throws Exception {
+    public List<Transaction> getTransactionData() throws Exception {
         String rawJasonData = getApiData();
-        return parseJasonString(rawJasonData, includingTestOnlyData);
+        return parseJasonString(rawJasonData);
     }
 
     public String getApiData() throws Exception {
@@ -50,7 +50,7 @@ public abstract class ApiDataParser implements ApiDataFetcher {
         }
     }
 
-    protected abstract List<Transaction> parseJasonString(String rawJason, boolean includingTestOnlyData) throws Exception;
+    protected abstract List<Transaction> parseJasonString(String rawJason) throws Exception;
     protected abstract String getEntityContent();
     protected abstract String getApiPath();
 }

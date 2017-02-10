@@ -1,4 +1,4 @@
-package com.glu.capitalone.interview;
+package com.glu.capitalone.interview.filter;
 
 import com.glu.capitalone.interview.data.*;
 

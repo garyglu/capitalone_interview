@@ -1,6 +1,5 @@
 package com.glu.capitalone.interview.filter;
 
-import com.glu.capitalone.interview.*;
 import com.glu.capitalone.interview.data.*;
 
 import java.util.*;

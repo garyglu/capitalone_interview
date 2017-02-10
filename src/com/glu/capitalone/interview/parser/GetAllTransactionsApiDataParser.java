@@ -33,7 +33,7 @@ public class GetAllTransactionsApiDataParser extends ApiDataParser {
      * @throws Exception
      */
     @Override
-    protected List<Transaction> parseJasonString(String rawJason, boolean includingTestOnlyData)
+    protected List<Transaction> parseJasonString(String rawJason)
         throws Exception {
         List<Transaction> transactions = new ArrayList<>();
         JSONObject jsonObject = new JSONObject(rawJason);
@@ -42,9 +42,6 @@ public class GetAllTransactionsApiDataParser extends ApiDataParser {
         for (int i = 0; i < array.length(); i++) {
             JSONObject obj = array.getJSONObject(i);
             if (obj != null) {
-                if (!includingTestOnlyData && obj.has("memo-only-for-testing")) {
-                    continue;
-                }
                 transactions.add(
                     new Transaction(
                         obj.getString("transaction-id"),
@@ -55,7 +52,8 @@ public class GetAllTransactionsApiDataParser extends ApiDataParser {
                         obj.getBigInteger("amount"),
                         obj.getLong("aggregation-time"),
                         obj.getLong("clear-date"),
-                        obj.getString("categorization")));
+                        obj.getString("categorization"),
+                        obj.has("memo-only-for-testing")));
             }
         }
         return transactions;

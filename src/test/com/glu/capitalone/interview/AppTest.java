@@ -1,5 +1,6 @@
 package test.com.glu.capitalone.interview;
 
+import com.glu.capitalone.interview.config.*;
 import com.glu.capitalone.interview.handler.*;
 import com.glu.capitalone.interview.interfaces.*;
 import com.glu.capitalone.interview.parser.*;
@@ -39,9 +40,7 @@ public class AppTest extends TestCase {
      * test Jason parser
      */
     public void testAllTransactionParser() {
-        TestAllTransactionParser testAllTransactionParser = new TestAllTransactionParser(getAllTransactionJasonString());
-        TestProjectedTransactionParser testProjectedTransactionParser = new TestProjectedTransactionParser(getProjectedTransactionJasonString());
-        TestHandler handler = new TestHandler(testAllTransactionParser, testProjectedTransactionParser);
+        TestHandler handler = getTestHandler();
 
         //test default setting
         try {
@@ -104,6 +103,14 @@ public class AppTest extends TestCase {
         }
     }
 
+    private TestHandler getTestHandler() {
+        TestAllTransactionParser
+            testAllTransactionParser = new TestAllTransactionParser(getAllTransactionJasonString());
+        TestProjectedTransactionParser
+            testProjectedTransactionParser = new TestProjectedTransactionParser(getProjectedTransactionJasonString());
+        return new TestHandler(testAllTransactionParser, testProjectedTransactionParser);
+    }
+
     /**
      * test Jason parser
      */
@@ -140,16 +147,9 @@ public class AppTest extends TestCase {
             this.projectedTransactionParser = projectedTransactionParser;
         }
 
-
-
         @Override
-        protected ApiDataParser getDefaultAllTransactionParser() {
-            return allTransactionParser != null ? allTransactionParser : super.getDefaultAllTransactionParser();
-        }
-
-        @Override
-        protected ApiDataParser getDefaultProjectedTransactionParser() {
-            return projectedTransactionParser != null ? projectedTransactionParser : super.getDefaultProjectedTransactionParser();
+        protected Config createNewConfigInstance() {
+            return new TestConfig(this.allTransactionParser, this.projectedTransactionParser);
         }
     }
 
@@ -176,6 +176,27 @@ public class AppTest extends TestCase {
         @Override
         public String getApiData() throws Exception {
             return jsonString;
+        }
+    }
+
+    private class TestConfig extends DefaultConfig {
+        private final TestAllTransactionParser allTransactionParser;
+        private final TestProjectedTransactionParser projectedTransactionParser;
+
+        public TestConfig(TestAllTransactionParser allTransactionParser,
+            TestProjectedTransactionParser projectedTransactionParser) {
+            this.allTransactionParser = allTransactionParser;
+            this.projectedTransactionParser = projectedTransactionParser;
+        }
+
+        @Override
+        protected ApiDataParser getDefaultAllTransactionParser() {
+            return allTransactionParser != null ? allTransactionParser : super.getDefaultAllTransactionParser();
+        }
+
+        @Override
+        protected ApiDataParser getDefaultProjectedTransactionParser() {
+            return projectedTransactionParser != null ? projectedTransactionParser : super.getDefaultProjectedTransactionParser();
         }
     }
 }

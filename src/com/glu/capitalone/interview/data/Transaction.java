@@ -18,20 +18,23 @@ public class Transaction {
     private final Date aggregationTime;
     private final Date clearDate;
     private final String categorization;
+    private final boolean isTestOnly;
     private boolean isCCPyament;
+
 
 
     public Transaction(String transactionId, String accountId,
         String rawMerchant, String merchant, boolean isPending,
         Date transactionTime, BigInteger amount, long aggregationTime,
-        long clearDate, String categorization) {
-        this(transactionId, "", accountId, rawMerchant, merchant, isPending, transactionTime, amount, aggregationTime, clearDate, categorization);
+        long clearDate, String categorization, boolean isTestOnly) {
+        this(transactionId, "", accountId, rawMerchant, merchant, isPending,
+            transactionTime, amount, aggregationTime, clearDate, categorization, isTestOnly);
     }
 
     public Transaction(String transactionId, String previousTransactionId,
-        String accountId, String rawMerchant, String merchant,
-        boolean isPending, Date transactionTime, BigInteger amount,
-        long aggregationTime, long clearDate, String categorization) {
+        String accountId, String rawMerchant, String merchant, boolean isPending,
+        Date transactionTime, BigInteger amount, long aggregationTime,
+        long clearDate, String categorization, boolean isTestOnly) {
         this.transactionId = transactionId;
         this.previousTransactionId = previousTransactionId;
         this.accountId = accountId;
@@ -47,6 +50,7 @@ public class Transaction {
         cal2.setTimeInMillis(clearDate);
         this.clearDate = cal2.getTime();
         this.categorization = categorization;
+        this.isTestOnly = isTestOnly;
     }
 
     public BigInteger getAmount() {
@@ -72,6 +76,10 @@ public class Transaction {
 
     public Date getTransactionTime() {
         return transactionTime;
+    }
+
+    public boolean getIsTestOnly() {
+        return isTestOnly;
     }
 
     public String toDateTimeString(Date date) {

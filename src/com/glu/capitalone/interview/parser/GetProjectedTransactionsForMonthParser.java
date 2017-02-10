@@ -25,7 +25,7 @@ public class GetProjectedTransactionsForMonthParser extends ApiDataParser {
     }
 
     @Override
-    protected List<Transaction> parseJasonString(String rawJason, boolean includingTestOnlyData) throws Exception {
+    protected List<Transaction> parseJasonString(String rawJason) throws Exception {
         List<Transaction> list = new ArrayList<>();
         JSONObject jsonObject = new JSONObject(rawJason);
         JSONArray array = jsonObject.getJSONArray("transactions");
@@ -33,9 +33,6 @@ public class GetProjectedTransactionsForMonthParser extends ApiDataParser {
         for (int i = 0; i < array.length(); i++) {
             JSONObject obj = array.getJSONObject(i);
             if (obj != null) {
-                if (!includingTestOnlyData && obj.has("memo-only-for-testing")) {
-                    continue;
-                }
                 list.add(
                     new Transaction(
                         obj.getString("transaction-id"),
@@ -46,7 +43,8 @@ public class GetProjectedTransactionsForMonthParser extends ApiDataParser {
                         obj.getBigInteger("amount"),
                         obj.getLong("aggregation-time"),
                         obj.getLong("clear-date"),
-                        obj.getString("categorization")));
+                        obj.getString("categorization"),
+                        obj.has("memo-only-for-testing")));
             }
         }
         return list;
