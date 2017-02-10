@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="capitalone" default="all">
+  
+  
+  <property file="capitalone.properties"/>
+  <!-- Uncomment the following property if no tests compilation is needed -->
+  <!-- 
+  <property name="skip.tests" value="true"/>
+   -->
+  
+  <!-- Compiler options -->
+  
+  <property name="compiler.debug" value="on"/>
+  <property name="compiler.generate.no.warnings" value="off"/>
+  <property name="compiler.max.memory" value="700m"/>
+  <property name="compiler.args" value=""/>
+  <patternset id="library.patterns">
+    <include name="*.war"/>
+    <include name="*.ear"/>
+    <include name="*.apk"/>
+    <include name="*.zip"/>
+    <include name="*.swc"/>
+    <include name="*.ane"/>
+    <include name="*.egg"/>
+    <include name="*.jar"/>
+  </patternset>
+  <patternset id="compiler.resources">
+    <exclude name="**/?*.java"/>
+    <exclude name="**/?*.form"/>
+    <exclude name="**/?*.class"/>
+    <exclude name="**/?*.groovy"/>
+    <exclude name="**/?*.scala"/>
+    <exclude name="**/?*.flex"/>
+    <exclude name="**/?*.kt"/>
+    <exclude name="**/?*.clj"/>
+    <exclude name="**/?*.aj"/>
+  </patternset>
+  
+  <!-- JDK definitions -->
+  
+  <property name="jdk.bin.1.8.0_54x64" value="${jdk.home.1.8.0_54x64}/bin"/>
+  <path id="jdk.classpath.1.8.0_54x64">
+    <fileset dir="${jdk.home.1.8.0_54x64}">
+      <include name="jre/lib/charsets.jar"/>
+      <include name="jre/lib/deploy.jar"/>
+      <include name="jre/lib/javaws.jar"/>
+      <include name="jre/lib/jce.jar"/>
+      <include name="jre/lib/jfr.jar"/>
+      <include name="jre/lib/jfxswt.jar"/>
+      <include name="jre/lib/jsse.jar"/>
+      <include name="jre/lib/management-agent.jar"/>
+      <include name="jre/lib/plugin.jar"/>
+      <include name="jre/lib/resources.jar"/>
+      <include name="jre/lib/rt.jar"/>
+      <include name="jre/lib/ext/access-bridge-64.jar"/>
+      <include name="jre/lib/ext/cldrdata.jar"/>
+      <include name="jre/lib/ext/dnsns.jar"/>
+      <include name="jre/lib/ext/jaccess.jar"/>
+      <include name="jre/lib/ext/jfxrt.jar"/>
+      <include name="jre/lib/ext/localedata.jar"/>
+      <include name="jre/lib/ext/nashorn.jar"/>
+      <include name="jre/lib/ext/sunec.jar"/>
+      <include name="jre/lib/ext/sunjce_provider.jar"/>
+      <include name="jre/lib/ext/sunmscapi.jar"/>
+      <include name="jre/lib/ext/sunpkcs11.jar"/>
+      <include name="jre/lib/ext/zipfs.jar"/>
+    </fileset>
+  </path>
+  
+  <property name="project.jdk.home" value="${jdk.home.1.8.0_54x64}"/>
+  <property name="project.jdk.bin" value="${jdk.bin.1.8.0_54x64}"/>
+  <property name="project.jdk.classpath" value="jdk.classpath.1.8.0_54x64"/>
+  
+  <!-- Modules -->
+  
+  
+  <!-- Module capitalone -->
+  
+  <dirname property="basedir" file="${ant.file}"/>
+
+  <property name="outdir" value="${basedir}/out"/>
+  <property name="testoutput.dir" value="${outdir}/test"/>
+
+  <property name="jdk.home.capitalone" value="${project.jdk.home}"/>
+  <property name="jdk.bin.capitalone" value="${project.jdk.bin}"/>
+  <property name="jdk.classpath.capitalone" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.capitalone" value="-encoding windows-1252 -source 8 ${compiler.args}"/>
+  
+  <property name="com.glu.capitalone.interview.output.dir" value="${basedir}/out"/>
+
+  
+  <path id="bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="production.classpath">
+    <path refid="${jdk.classpath.capitalone}"/>
+    <pathelement location="${basedir}/lib/httpclient-4.5.3.jar"/>
+    <pathelement location="${basedir}/lib/httpcore-4.4.6.jar"/>
+    <pathelement location="${basedir}/lib/json-20160810.jar"/>
+    <pathelement location="${basedir}/lib/commons-logging-1.2.jar"/>
+    <pathelement location="${basedir}/lib/junit-4.12.jar"/>
+  </path>
+  
+  <path id="production.runtime.classpath">
+    <pathelement location="${outdir}"/>
+    <pathelement location="${basedir}/lib/httpclient-4.5.3.jar"/>
+    <pathelement location="${basedir}/lib/httpcore-4.4.6.jar"/>
+    <pathelement location="${basedir}/lib/json-20160810.jar"/>
+    <pathelement location="${basedir}/lib/commons-logging-1.2.jar"/>
+    <pathelement location="${basedir}/lib/junit-4.12.jar"/>
+  </path>
+  
+  <path id="classpath">
+    <path refid="${jdk.classpath.capitalone}"/>
+    <pathelement location="${outdir}"/>
+    <pathelement location="${basedir}/lib/httpclient-4.5.3.jar"/>
+    <pathelement location="${basedir}/lib/httpcore-4.4.6.jar"/>
+    <pathelement location="${basedir}/lib/json-20160810.jar"/>
+    <pathelement location="${basedir}/lib/commons-logging-1.2.jar"/>
+    <pathelement location="${basedir}/lib/junit-4.12.jar"/>
+  </path>
+  
+  <path id="runtime.classpath">
+    <pathelement location="${testoutput.dir}"/>
+    <pathelement location="${outdir}"/>
+    <pathelement location="${basedir}/lib/httpclient-4.5.3.jar"/>
+    <pathelement location="${basedir}/lib/httpcore-4.4.6.jar"/>
+    <pathelement location="${basedir}/lib/json-20160810.jar"/>
+    <pathelement location="${basedir}/lib/commons-logging-1.2.jar"/>
+    <pathelement location="${basedir}/lib/junit-4.12.jar"/>
+  </path>
+  
+  
+  <path id="sourcepath">
+    <dirset dir="${basedir}">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile" depends="compile.production,compile.tests" description="Compile module capitalone"/>
+  
+  <target name="compile.production" description="Compile module capitalone; production classes">
+    <mkdir dir="${outdir}"/>
+    <javac destdir="${outdir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${jdk.bin.capitalone}/javac">
+      <compilerarg line="${compiler.args.capitalone}"/>
+      <bootclasspath refid="bootclasspath"/>
+      <classpath refid="production.classpath"/>
+      <src refid="sourcepath"/>
+    </javac>
+    
+    <copy todir="${outdir}">
+      <fileset dir="${basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.tests" depends="compile.production" description="compile module capitalone; test classes" unless="skip.tests"/>
+  
+  <target name="clean" description="cleanup module">
+    <delete dir="${outdir}"/>
+    <delete dir="${testoutput.dir}"/>
+  </target>
+  
+  <target name="init" description="Build initialization">
+    <!-- Perform any build initialization in this target -->
+  </target>
+
+  <target name="build" depends="init, clean, jar" description="build all modules"/>
+  
+  <target name="all" depends="build" description="build all"/>
+
+  <target name="jar" depends="compile" description="create a capitalone.jar">
+     <jar basedir="${outdir}" destfile="${basedir}/lib/capitalone.jar" compress="false"/>
+  </target>
+</project>
