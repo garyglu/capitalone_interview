@@ -1,7 +1,5 @@
 package com.glu.capitalone.interview.data;
 
-import com.glu.capitalone.interview.interfaces.*;
-
 import java.math.*;
 import java.util.*;
 
@@ -83,7 +81,7 @@ public class Transaction {
     }
 
     public String toDateTimeString(Date date) {
-        return date == null ? "" : ApiDataParser.simpleDateFormat.format(date);
+        return date == null ? "" : com.glu.capitalone.interview.parser.ApiDataParser.simpleDateFormat.format(date);
     }
 
     public boolean isCCPyament() {

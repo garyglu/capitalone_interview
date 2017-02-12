@@ -57,11 +57,11 @@ public class DefaultConfig implements Config{
         return outputList;
     }
 
-    protected ApiDataParser getDefaultAllTransactionParser() {
+    protected com.glu.capitalone.interview.parser.ApiDataParser getDefaultAllTransactionParser() {
         return ApiServiceEnum.getAllTransactions.getParser();
     }
 
-    protected ApiDataParser getDefaultProjectedTransactionParser() {
+    protected com.glu.capitalone.interview.parser.ApiDataParser getDefaultProjectedTransactionParser() {
         return ApiServiceEnum.getProjectedTransactionsForMonth.getParser();
     }
 }

@@ -1,7 +1,7 @@
 package com.glu.capitalone.interview;
 
-import com.glu.capitalone.interview.interfaces.*;
 import com.glu.capitalone.interview.parser.*;
+import com.glu.capitalone.interview.parser.ApiDataParser;
 
 public enum ApiServiceEnum {
     getAllTransactions              (1, "get-all-transactions",            new GetAllTransactionsApiDataParser()),

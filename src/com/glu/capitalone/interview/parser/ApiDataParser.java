@@ -1,6 +1,7 @@
-package com.glu.capitalone.interview.interfaces;
+package com.glu.capitalone.interview.parser;
 
 import com.glu.capitalone.interview.data.*;
+import com.glu.capitalone.interview.interfaces.*;
 import org.apache.http.*;
 import org.apache.http.client.*;
 import org.apache.http.client.methods.*;
@@ -38,6 +39,11 @@ public abstract class ApiDataParser implements ApiDataFetcher {
         httpPost.setEntity(new StringEntity(getEntityContent()));
 
         HttpResponse response = httpClient.execute(httpPost);
+
+        //status 200: OK
+        if (response.getStatusLine().getStatusCode() != 200) {
+            throw new Exception("Failed to get API Data. Response status code = " + response.getStatusLine().getStatusCode());
+        }
         return EntityUtils.toString(response.getEntity());
     }
 

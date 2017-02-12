@@ -2,7 +2,6 @@ package com.glu.capitalone.interview.parser;
 
 import com.glu.capitalone.interview.*;
 import com.glu.capitalone.interview.data.*;
-import com.glu.capitalone.interview.interfaces.*;
 import org.json.*;
 
 import java.util.*;
